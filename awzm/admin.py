@@ -1,13 +1,23 @@
 from django.contrib import admin
 
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
+from unfold.admin import TabularInline as UnfoldTabularInline
+
 from .models import Foo, Bar
 
 
+class BarInline(UnfoldTabularInline):
+    model = Bar
+    extra = 1
+
+
 @admin.register(Foo)
-class FooAdmin(admin.ModelAdmin):
-    pass
+class FooAdmin(UnfoldModelAdmin):
+    inlines = [
+        BarInline
+    ]
 
 
 @admin.register(Bar)
-class BarAdmin(admin.ModelAdmin):
+class BarAdmin(UnfoldModelAdmin):
     pass
